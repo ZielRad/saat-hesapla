@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haftalık Çalışma Takibi</title>
   <style>
-    /* Genel stil */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -17,7 +16,6 @@
 
     h2, h3 {
       text-align: center;
-      color: #333;
     }
 
     table {
@@ -60,7 +58,7 @@
 
     /* Modal ve Popup Tasarımı */
     .modal {
-      display: none; /* Varsayılan olarak gizli */
+      display: none;
       position: fixed;
       z-index: 1;
       left: 0;
@@ -132,6 +130,7 @@
   </style>
 </head>
 <body>
+
   <h2>Haftalık Çalışma Takibi</h2>
 
   <h3>Çalışma Saatlerini Girin</h3>
@@ -228,7 +227,7 @@
       const hour = document.getElementById('hour-select').value;
       const minute = document.getElementById('minute-select').value;
       const time = hour + ':' + minute;
-      document.getElementById(selectedTimeField).value = time; // Seçilen saati input alanına aktar
+      document.getElementById(selectedTimeField).innerText = time; // Seçilen saati input alanına aktar
       closeModal(); // Modal'ı kapat
     }
 
@@ -237,36 +236,36 @@
       let totalMinutes = 0;
 
       // Pazartesi
-      let mondayIn = document.getElementById('monday-in').value;
-      let mondayOut = document.getElementById('monday-out').value;
+      let mondayIn = document.getElementById('monday-in').innerText;
+      let mondayOut = document.getElementById('monday-out').innerText;
       if (mondayIn && mondayOut) {
         totalMinutes += calculateMinutes(mondayIn, mondayOut);
       }
 
       // Salı
-      let tuesdayIn = document.getElementById('tuesday-in').value;
-      let tuesdayOut = document.getElementById('tuesday-out').value;
+      let tuesdayIn = document.getElementById('tuesday-in').innerText;
+      let tuesdayOut = document.getElementById('tuesday-out').innerText;
       if (tuesdayIn && tuesdayOut) {
         totalMinutes += calculateMinutes(tuesdayIn, tuesdayOut);
       }
 
       // Çarşamba
-      let wednesdayIn = document.getElementById('wednesday-in').value;
-      let wednesdayOut = document.getElementById('wednesday-out').value;
+      let wednesdayIn = document.getElementById('wednesday-in').innerText;
+      let wednesdayOut = document.getElementById('wednesday-out').innerText;
       if (wednesdayIn && wednesdayOut) {
         totalMinutes += calculateMinutes(wednesdayIn, wednesdayOut);
       }
 
       // Perşembe
-      let thursdayIn = document.getElementById('thursday-in').value;
-      let thursdayOut = document.getElementById('thursday-out').value;
+      let thursdayIn = document.getElementById('thursday-in').innerText;
+      let thursdayOut = document.getElementById('thursday-out').innerText;
       if (thursdayIn && thursdayOut) {
         totalMinutes += calculateMinutes(thursdayIn, thursdayOut);
       }
 
       // Cuma
-      let fridayIn = document.getElementById('friday-in').value;
-      let fridayOut = document.getElementById('friday-out').value;
+      let fridayIn = document.getElementById('friday-in').innerText;
+      let fridayOut = document.getElementById('friday-out').innerText;
       if (fridayIn && fridayOut) {
         totalMinutes += calculateMinutes(fridayIn, fridayOut);
       }
