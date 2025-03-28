@@ -93,7 +93,7 @@
       td:nth-child(2)::before { content: "Giriş"; }
       td:nth-child(3)::before { content: "Çıkış"; }
 
-      select {
+      input[type="time"] {
         width: 100%;
         padding: 8px;
         font-size: 16px;
@@ -127,78 +127,28 @@
     <tbody>
       <tr>
         <td>Pazartesi</td>
-        <td>
-          <select id="monday-in-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
-        <td>
-          <select id="monday-out-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
+        <td><input type="time" id="monday-in" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="monday-out" onchange="limitMinutes(this)"></td>
       </tr>
       <tr>
         <td>Salı</td>
-        <td>
-          <select id="tuesday-in-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
-        <td>
-          <select id="tuesday-out-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
+        <td><input type="time" id="tuesday-in" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="tuesday-out" onchange="limitMinutes(this)"></td>
       </tr>
       <tr>
         <td>Çarşamba</td>
-        <td>
-          <select id="wednesday-in-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
-        <td>
-          <select id="wednesday-out-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
+        <td><input type="time" id="wednesday-in" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="wednesday-out" onchange="limitMinutes(this)"></td>
       </tr>
       <tr>
         <td>Perşembe</td>
-        <td>
-          <select id="thursday-in-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
-        <td>
-          <select id="thursday-out-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
+        <td><input type="time" id="thursday-in" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="thursday-out" onchange="limitMinutes(this)"></td>
       </tr>
       <tr>
         <td>Cuma</td>
-        <td>
-          <select id="friday-in-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
-        <td>
-          <select id="friday-out-minutes">
-            <option value="00">00</option>
-            <option value="30">30</option>
-          </select>
-        </td>
+        <td><input type="time" id="friday-in" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="friday-out" onchange="limitMinutes(this)"></td>
       </tr>
     </tbody>
   </table>
@@ -208,42 +158,53 @@
   <h3>Haftalık Çalışma Süresi: <span id="total-hours">0</span> saat</h3>
 
   <script>
+    // Dakika kısmını yalnızca 00 ve 30 olarak kısıtlayan fonksiyon
+    function limitMinutes(input) {
+      const value = input.value;
+      const [hours, minutes] = value.split(':');
+
+      // Eğer dakika 00 veya 30 değilse, 00'a ayarlıyoruz
+      if (minutes !== '00' && minutes !== '30') {
+        input.value = `${hours}:00`;
+      }
+    }
+
     function calculateWorkingHours() {
       let totalMinutes = 0;
 
       // Pazartesi
-      let mondayInMinutes = document.getElementById('monday-in-minutes').value;
-      let mondayOutMinutes = document.getElementById('monday-out-minutes').value;
-      if (mondayInMinutes && mondayOutMinutes) {
-        totalMinutes += calculateMinutes(mondayInMinutes, mondayOutMinutes);
+      let mondayIn = document.getElementById('monday-in').value;
+      let mondayOut = document.getElementById('monday-out').value;
+      if (mondayIn && mondayOut) {
+        totalMinutes += calculateMinutes(mondayIn, mondayOut);
       }
 
       // Salı
-      let tuesdayInMinutes = document.getElementById('tuesday-in-minutes').value;
-      let tuesdayOutMinutes = document.getElementById('tuesday-out-minutes').value;
-      if (tuesdayInMinutes && tuesdayOutMinutes) {
-        totalMinutes += calculateMinutes(tuesdayInMinutes, tuesdayOutMinutes);
+      let tuesdayIn = document.getElementById('tuesday-in').value;
+      let tuesdayOut = document.getElementById('tuesday-out').value;
+      if (tuesdayIn && tuesdayOut) {
+        totalMinutes += calculateMinutes(tuesdayIn, tuesdayOut);
       }
 
       // Çarşamba
-      let wednesdayInMinutes = document.getElementById('wednesday-in-minutes').value;
-      let wednesdayOutMinutes = document.getElementById('wednesday-out-minutes').value;
-      if (wednesdayInMinutes && wednesdayOutMinutes) {
-        totalMinutes += calculateMinutes(wednesdayInMinutes, wednesdayOutMinutes);
+      let wednesdayIn = document.getElementById('wednesday-in').value;
+      let wednesdayOut = document.getElementById('wednesday-out').value;
+      if (wednesdayIn && wednesdayOut) {
+        totalMinutes += calculateMinutes(wednesdayIn, wednesdayOut);
       }
 
       // Perşembe
-      let thursdayInMinutes = document.getElementById('thursday-in-minutes').value;
-      let thursdayOutMinutes = document.getElementById('thursday-out-minutes').value;
-      if (thursdayInMinutes && thursdayOutMinutes) {
-        totalMinutes += calculateMinutes(thursdayInMinutes, thursdayOutMinutes);
+      let thursdayIn = document.getElementById('thursday-in').value;
+      let thursdayOut = document.getElementById('thursday-out').value;
+      if (thursdayIn && thursdayOut) {
+        totalMinutes += calculateMinutes(thursdayIn, thursdayOut);
       }
 
       // Cuma
-      let fridayInMinutes = document.getElementById('friday-in-minutes').value;
-      let fridayOutMinutes = document.getElementById('friday-out-minutes').value;
-      if (fridayInMinutes && fridayOutMinutes) {
-        totalMinutes += calculateMinutes(fridayInMinutes, fridayOutMinutes);
+      let fridayIn = document.getElementById('friday-in').value;
+      let fridayOut = document.getElementById('friday-out').value;
+      if (fridayIn && fridayOut) {
+        totalMinutes += calculateMinutes(fridayIn, fridayOut);
       }
 
       // Toplam saat hesapla
@@ -252,11 +213,9 @@
     }
 
     function calculateMinutes(inTime, outTime) {
-      let inHour = parseInt(inTime) || 0;
-      let outHour = parseInt(outTime) || 0;
-      
-      // Saat farkını ve dakikaları hesapla
-      return (outHour - inHour) * 60;
+      let inDate = new Date('1970-01-01T' + inTime + 'Z');
+      let outDate = new Date('1970-01-01T' + outTime + 'Z');
+      return (outDate - inDate) / 60000; // Milisaniye cinsinden farkı dakika olarak hesapla
     }
   </script>
 </body>
