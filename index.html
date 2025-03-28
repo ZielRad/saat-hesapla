@@ -188,7 +188,9 @@
     function calculateMinutes(inTime, outTime) {
       let inDate = new Date('1970-01-01T' + inTime + 'Z');
       let outDate = new Date('1970-01-01T' + outTime + 'Z');
-      return (outDate - inDate) / 60000; // Milisaniye cinsinden farkı dakika olarak hesapla
+      
+      let diff = (outDate - inDate) / 60000; // 1 dakika = 60000 milisaniye
+      return diff; // Bu farkı dakika olarak döndürüyoruz
     }
   </script>
 
