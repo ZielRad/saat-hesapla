@@ -210,25 +210,29 @@
   </div>
 
   <script>
-    let selectedTimeField = '';
+    let selectedTimeField = ''; // Seçilen input alanı tutuluyor
 
+    // Modal'ı açma
     function openModal(field) {
-      selectedTimeField = field;
-      document.getElementById("timeModal").style.display = "block"; // Modal açılır
+      selectedTimeField = field; // Hangi alanın seçildiği belirleniyor
+      document.getElementById("timeModal").style.display = "block"; // Modal'ı göster
     }
 
+    // Modal'ı kapama
     function closeModal() {
-      document.getElementById("timeModal").style.display = "none"; // Modal kapanır
+      document.getElementById("timeModal").style.display = "none"; // Modal'ı gizle
     }
 
+    // Seçilen saati ve dakikayı input'a yazma ve modal'ı kapatma
     function setTime() {
       const hour = document.getElementById('hour-select').value;
       const minute = document.getElementById('minute-select').value;
       const time = hour + ':' + minute;
-      document.getElementById(selectedTimeField).value = time; // Seçilen saat input alanına yazılır
-      closeModal(); // Seçim yapıldıktan sonra modal kapanır
+      document.getElementById(selectedTimeField).value = time; // Seçilen saati input alanına aktar
+      closeModal(); // Modal'ı kapat
     }
 
+    // Çalışma saatlerini hesaplama
     function calculateWorkingHours() {
       let totalMinutes = 0;
 
@@ -272,6 +276,7 @@
       document.getElementById('total-hours').textContent = totalHours.toFixed(2);
     }
 
+    // Saat farkını dakika cinsinden hesaplama
     function calculateMinutes(inTime, outTime) {
       let inDate = new Date('1970-01-01T' + inTime + 'Z');
       let outDate = new Date('1970-01-01T' + outTime + 'Z');
