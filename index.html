@@ -68,8 +68,7 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgb(0,0,0);
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
@@ -215,11 +214,11 @@
 
     function openModal(field) {
       selectedTimeField = field;
-      document.getElementById("timeModal").style.display = "block";
+      document.getElementById("timeModal").style.display = "block"; // Modal açılır
     }
 
     function closeModal() {
-      document.getElementById("timeModal").style.display = "none";
+      document.getElementById("timeModal").style.display = "none"; // Modal kapanır
     }
 
     function setTime() {
@@ -227,7 +226,7 @@
       const minute = document.getElementById('minute-select').value;
       const time = hour + ':' + minute;
       document.getElementById(selectedTimeField).value = time;
-      closeModal();
+      closeModal(); // Seçim yapıldıktan sonra modal kapanır
     }
 
     function calculateWorkingHours() {
