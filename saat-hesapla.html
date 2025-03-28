@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Haftalık Çalışma Takibi</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    td, th {
+      padding: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    input[type="time"] {
+      width: 90%;
+    }
+    button {
+      padding: 10px 20px;
+      width: 100%;
+      font-weight: bold;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 600px) {
+  body {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  td {
+    text-align: left;
+    padding: 8px 5px;
+  }
+
+  td::before {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  td:nth-child(1)::before { content: "Gün"; }
+  td:nth-child(2)::before { content: "Giriş"; }
+  td:nth-child(3)::before { content: "Çıkış"; }
+
+  input[type="time"] {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h2>Haftalık Çalışma Girişi (Pazartesi - Cuma)</h2>
+
+  <table>
+    <tr>
+      <th>Gün</th>
+      <th>Giriş Saati</th>
+      <th>Çıkış Saati</th>
+    </tr>
+    <tbody id="weekInputs">
+      <!-- JavaScript ile günler eklenecek -->
+    </tbody>
+  </table>
+
+  <button onclick="saveWeek()">Kaydet</button>
+
+  <h3>Toplam Çalışma Süresi: <span id="totalTime">0 saat 0 dakika</span></h3>
+
+  <script>
+    const dayNames = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"];
+    const weekInputs = document.getElementById("weekInputs");
+    const weekDates = [];
+
+    // Haftanın tarihlerini hesapla (Pazartesi - Cuma)
+    function getCurrentWeekDates() {
+      const today = new Date();
+      const monday = new Date(today.setDate(today.getDate() - today.getDay() + 1));
+      monday.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < 5; i++) {
+        const day = new Date(monday);
+        day.setDate(monday.getDate() + i);
+        weekDates.push(day);
+      }
+    }
+
+    // Tarihi gün.ay.yıl formatına çevir
+    function formatDate(date) {
+      const d = date.getDate().toString().padStart(2, '0');
+      const m = (date.getMonth() + 1).toString().padStart(2, '0');
+      const y = date.getFullYear();
+      return `${d}.${m}.${y}`;
+    }
+
+    // Formu oluştur
+    function generateForm() {
+      getCurrentWeekDates();
+
+      weekDates.forEach((date, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${dayNames[index]}<br><small>${formatDate(date)}</small></td>
+          <td><input type="time" id="start-${index}"></td>
+          <td><input type="time" id="end-${index}"></td>
+        `;
+        weekInputs.appendChild(row);
+      });
+    }
+
+    // Haftayı kaydet ve süreyi hesapla
+    function saveWeek() {
+      const weekData = {};
+      let totalMinutes = 0;
+
+      weekDates.forEach((date, index) => {
+        const startVal = document.getElementById(`start-${index}`).value;
+        const endVal = document.getElementById(`end-${index}`).value;
+        const formattedDate = formatDate(date);
+
+        if (startVal && endVal) {
+          const [sh, sm] = startVal.split(":").map(Number);
+          const [eh, em] = endVal.split(":").map(Number);
+          const startMinutes = sh * 60 + sm;
+          const endMinutes = eh * 60 + em;
+
+          const diff = endMinutes - startMinutes;
+          if (diff > 0) {
+            totalMinutes += diff;
+            weekData[formattedDate] = { start: startVal, end: endVal };
+          }
+        }
+      });
+
+      const weekKey = `week-${formatDate(weekDates[0])}`;
+      localStorage.setItem(weekKey, JSON.stringify(weekData));
+
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      document.getElementById("totalTime").textContent = `${hours} saat ${minutes} dakika`;
+    }
+
+    // Sayfa yüklendiğinde formu oluştur
+    document.addEventListener("DOMContentLoaded", generateForm);
+  </script>
+</body>
+</html>
