@@ -56,43 +56,6 @@
       background-color: #0056b3;
     }
 
-    /* Modal ve Popup Tasarımı */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 6px;
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
     select {
       width: 100%;
       padding: 10px;
@@ -146,28 +109,28 @@
     <tbody>
       <tr>
         <td>Pazartesi</td>
-        <td><button onclick="openModal('monday-in')">Saat Seç</button></td>
-        <td><button onclick="openModal('monday-out')">Saat Seç</button></td>
+        <td><input type="time" id="monday-in" name="monday-in"></td>
+        <td><input type="time" id="monday-out" name="monday-out"></td>
       </tr>
       <tr>
         <td>Salı</td>
-        <td><button onclick="openModal('tuesday-in')">Saat Seç</button></td>
-        <td><button onclick="openModal('tuesday-out')">Saat Seç</button></td>
+        <td><input type="time" id="tuesday-in" name="tuesday-in"></td>
+        <td><input type="time" id="tuesday-out" name="tuesday-out"></td>
       </tr>
       <tr>
         <td>Çarşamba</td>
-        <td><button onclick="openModal('wednesday-in')">Saat Seç</button></td>
-        <td><button onclick="openModal('wednesday-out')">Saat Seç</button></td>
+        <td><input type="time" id="wednesday-in" name="wednesday-in"></td>
+        <td><input type="time" id="wednesday-out" name="wednesday-out"></td>
       </tr>
       <tr>
         <td>Perşembe</td>
-        <td><button onclick="openModal('thursday-in')">Saat Seç</button></td>
-        <td><button onclick="openModal('thursday-out')">Saat Seç</button></td>
+        <td><input type="time" id="thursday-in" name="thursday-in"></td>
+        <td><input type="time" id="thursday-out" name="thursday-out"></td>
       </tr>
       <tr>
         <td>Cuma</td>
-        <td><button onclick="openModal('friday-in')">Saat Seç</button></td>
-        <td><button onclick="openModal('friday-out')">Saat Seç</button></td>
+        <td><input type="time" id="friday-in" name="friday-in"></td>
+        <td><input type="time" id="friday-out" name="friday-out"></td>
       </tr>
     </tbody>
   </table>
@@ -176,96 +139,42 @@
 
   <h3>Haftalık Çalışma Süresi: <span id="total-hours">0</span> saat</h3>
 
-  <!-- Saat Seçme Modal'ı -->
-  <div id="timeModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Saat Seçin</h3>
-      <label for="hour-select">Saat:</label>
-      <select id="hour-select">
-        <option value="00">00</option>
-        <option value="01">01</option>
-        <option value="02">02</option>
-        <option value="03">03</option>
-        <option value="04">04</option>
-        <option value="05">05</option>
-        <option value="06">06</option>
-        <option value="07">07</option>
-        <option value="08">08</option>
-        <option value="09">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-
-      <label for="minute-select">Dakika:</label>
-      <select id="minute-select">
-        <option value="00">00</option>
-        <option value="30">30</option>
-      </select>
-
-      <button onclick="setTime()">Seç</button>
-    </div>
-  </div>
-
   <script>
-    let selectedTimeField = ''; // Seçilen input alanı tutuluyor
-
-    // Modal'ı açma
-    function openModal(field) {
-      selectedTimeField = field; // Hangi alanın seçildiği belirleniyor
-      document.getElementById("timeModal").style.display = "block"; // Modal'ı göster
-    }
-
-    // Modal'ı kapama
-    function closeModal() {
-      document.getElementById("timeModal").style.display = "none"; // Modal'ı gizle
-    }
-
-    // Seçilen saati ve dakikayı input'a yazma ve modal'ı kapatma
-    function setTime() {
-      const hour = document.getElementById('hour-select').value;
-      const minute = document.getElementById('minute-select').value;
-      const time = hour + ':' + minute;
-      document.getElementById(selectedTimeField).innerText = time; // Seçilen saati input alanına aktar
-      closeModal(); // Modal'ı kapat
-    }
-
     // Çalışma saatlerini hesaplama
     function calculateWorkingHours() {
       let totalMinutes = 0;
 
       // Pazartesi
-      let mondayIn = document.getElementById('monday-in').innerText;
-      let mondayOut = document.getElementById('monday-out').innerText;
+      let mondayIn = document.getElementById('monday-in').value;
+      let mondayOut = document.getElementById('monday-out').value;
       if (mondayIn && mondayOut) {
         totalMinutes += calculateMinutes(mondayIn, mondayOut);
       }
 
       // Salı
-      let tuesdayIn = document.getElementById('tuesday-in').innerText;
-      let tuesdayOut = document.getElementById('tuesday-out').innerText;
+      let tuesdayIn = document.getElementById('tuesday-in').value;
+      let tuesdayOut = document.getElementById('tuesday-out').value;
       if (tuesdayIn && tuesdayOut) {
         totalMinutes += calculateMinutes(tuesdayIn, tuesdayOut);
       }
 
       // Çarşamba
-      let wednesdayIn = document.getElementById('wednesday-in').innerText;
-      let wednesdayOut = document.getElementById('wednesday-out').innerText;
+      let wednesdayIn = document.getElementById('wednesday-in').value;
+      let wednesdayOut = document.getElementById('wednesday-out').value;
       if (wednesdayIn && wednesdayOut) {
         totalMinutes += calculateMinutes(wednesdayIn, wednesdayOut);
       }
 
       // Perşembe
-      let thursdayIn = document.getElementById('thursday-in').innerText;
-      let thursdayOut = document.getElementById('thursday-out').innerText;
+      let thursdayIn = document.getElementById('thursday-in').value;
+      let thursdayOut = document.getElementById('thursday-out').value;
       if (thursdayIn && thursdayOut) {
         totalMinutes += calculateMinutes(thursdayIn, thursdayOut);
       }
 
       // Cuma
-      let fridayIn = document.getElementById('friday-in').innerText;
-      let fridayOut = document.getElementById('friday-out').innerText;
+      let fridayIn = document.getElementById('friday-in').value;
+      let fridayOut = document.getElementById('friday-out').value;
       if (fridayIn && fridayOut) {
         totalMinutes += calculateMinutes(fridayIn, fridayOut);
       }
@@ -282,5 +191,6 @@
       return (outDate - inDate) / 60000; // Milisaniye cinsinden farkı dakika olarak hesapla
     }
   </script>
+
 </body>
 </html>
