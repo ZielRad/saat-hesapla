@@ -263,4 +263,21 @@
 
       // Cuma
       let fridayIn = document.getElementById('friday-in').value;
-      let fridayOut = document.getElement
+      let fridayOut = document.getElementById('friday-out').value;
+      if (fridayIn && fridayOut) {
+        totalMinutes += calculateMinutes(fridayIn, fridayOut);
+      }
+
+      // Toplam saat hesapla
+      let totalHours = totalMinutes / 60;
+      document.getElementById('total-hours').textContent = totalHours.toFixed(2);
+    }
+
+    function calculateMinutes(inTime, outTime) {
+      let inDate = new Date('1970-01-01T' + inTime + 'Z');
+      let outDate = new Date('1970-01-01T' + outTime + 'Z');
+      return (outDate - inDate) / 60000; // Milisaniye cinsinden farkı dakika olarak hesapla
+    }
+  </script>
+</body>
+</html>
