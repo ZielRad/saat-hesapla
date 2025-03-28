@@ -2,181 +2,262 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haftalık Çalışma Takibi</title>
   <style>
+    /* Genel stil */
     body {
-      font-family: Arial;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f9;
     }
+
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
     table {
       width: 100%;
+      margin: 20px 0;
       border-collapse: collapse;
-      margin-bottom: 20px;
     }
-    td, th {
-      padding: 8px;
-      border: 1px solid #ccc;
-      text-align: center;
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
     }
-    input[type="time"] {
-      width: 90%;
+
+    th {
+      background-color: #007BFF;
+      color: white;
     }
-    button {
-      padding: 10px 20px;
-      width: 100%;
+
+    td {
+      background-color: #f9f9f9;
+    }
+
+    td::before {
       font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
       background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
+    /* Mobil uyumlu stil */
     @media (max-width: 600px) {
-  body {
-    margin: 10px;
-    padding: 10px;
-  }
+      body {
+        padding: 10px;
+      }
 
-  table, thead, tbody, th, td, tr {
-    display: block;
-    width: 100%;
-  }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-  tr {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-  }
+      th, td {
+        padding: 8px;
+        text-align: left;
+        display: block;
+      }
 
-  td {
-    text-align: left;
-    padding: 8px 5px;
-  }
+      td {
+        border-bottom: 1px solid #ddd;
+      }
 
-  td::before {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 4px;
-  }
+      td::before {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+      }
 
-  td:nth-child(1)::before { content: "Gün"; }
-  td:nth-child(2)::before { content: "Giriş"; }
-  td:nth-child(3)::before { content: "Çıkış"; }
+      td:nth-child(1)::before { content: "Gün"; }
+      td:nth-child(2)::before { content: "Giriş"; }
+      td:nth-child(3)::before { content: "Çıkış"; }
 
-  input[type="time"] {
-    width: 100%;
-    font-size: 16px;
-  }
+      select {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+      }
 
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-}
+      button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+      }
+
+      h2, h3 {
+        text-align: center;
+      }
+    }
   </style>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h2>Haftalık Çalışma Girişi (Pazartesi - Cuma)</h2>
+  <h2>Haftalık Çalışma Takibi</h2>
+
+  <h3>Çalışma Saatlerini Girin</h3>
 
   <table>
-    <tr>
-      <th>Gün</th>
-      <th>Giriş Saati</th>
-      <th>Çıkış Saati</th>
-    </tr>
-    <tbody id="weekInputs">
-      <!-- JavaScript ile günler eklenecek -->
+    <thead>
+      <tr>
+        <th>Gün</th>
+        <th>Giriş Saati</th>
+        <th>Çıkış Saati</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pazartesi</td>
+        <td>
+          <select id="monday-in-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+        <td>
+          <select id="monday-out-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Salı</td>
+        <td>
+          <select id="tuesday-in-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+        <td>
+          <select id="tuesday-out-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Çarşamba</td>
+        <td>
+          <select id="wednesday-in-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+        <td>
+          <select id="wednesday-out-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Perşembe</td>
+        <td>
+          <select id="thursday-in-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+        <td>
+          <select id="thursday-out-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Cuma</td>
+        <td>
+          <select id="friday-in-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+        <td>
+          <select id="friday-out-minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+          </select>
+        </td>
+      </tr>
     </tbody>
   </table>
 
-  <button onclick="saveWeek()">Kaydet</button>
+  <button onclick="calculateWorkingHours()">Çalışma Saatlerini Hesapla</button>
 
-  <h3>Toplam Çalışma Süresi: <span id="totalTime">0 saat 0 dakika</span></h3>
+  <h3>Haftalık Çalışma Süresi: <span id="total-hours">0</span> saat</h3>
 
   <script>
-    const dayNames = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"];
-    const weekInputs = document.getElementById("weekInputs");
-    const weekDates = [];
-
-    // Haftanın tarihlerini hesapla (Pazartesi - Cuma)
-    function getCurrentWeekDates() {
-      const today = new Date();
-      const monday = new Date(today.setDate(today.getDate() - today.getDay() + 1));
-      monday.setHours(0, 0, 0, 0);
-
-      for (let i = 0; i < 5; i++) {
-        const day = new Date(monday);
-        day.setDate(monday.getDate() + i);
-        weekDates.push(day);
-      }
-    }
-
-    // Tarihi gün.ay.yıl formatına çevir
-    function formatDate(date) {
-      const d = date.getDate().toString().padStart(2, '0');
-      const m = (date.getMonth() + 1).toString().padStart(2, '0');
-      const y = date.getFullYear();
-      return `${d}.${m}.${y}`;
-    }
-
-    // Formu oluştur
-    function generateForm() {
-      getCurrentWeekDates();
-
-      weekDates.forEach((date, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${dayNames[index]}<br><small>${formatDate(date)}</small></td>
-          <td><input type="time" id="start-${index}"></td>
-          <td><input type="time" id="end-${index}"></td>
-        `;
-        weekInputs.appendChild(row);
-      });
-    }
-
-    // Haftayı kaydet ve süreyi hesapla
-    function saveWeek() {
-      const weekData = {};
+    function calculateWorkingHours() {
       let totalMinutes = 0;
 
-      weekDates.forEach((date, index) => {
-        const startVal = document.getElementById(`start-${index}`).value;
-        const endVal = document.getElementById(`end-${index}`).value;
-        const formattedDate = formatDate(date);
+      // Pazartesi
+      let mondayInMinutes = document.getElementById('monday-in-minutes').value;
+      let mondayOutMinutes = document.getElementById('monday-out-minutes').value;
+      if (mondayInMinutes && mondayOutMinutes) {
+        totalMinutes += calculateMinutes(mondayInMinutes, mondayOutMinutes);
+      }
 
-        if (startVal && endVal) {
-          const [sh, sm] = startVal.split(":").map(Number);
-          const [eh, em] = endVal.split(":").map(Number);
-          const startMinutes = sh * 60 + sm;
-          const endMinutes = eh * 60 + em;
+      // Salı
+      let tuesdayInMinutes = document.getElementById('tuesday-in-minutes').value;
+      let tuesdayOutMinutes = document.getElementById('tuesday-out-minutes').value;
+      if (tuesdayInMinutes && tuesdayOutMinutes) {
+        totalMinutes += calculateMinutes(tuesdayInMinutes, tuesdayOutMinutes);
+      }
 
-          const diff = endMinutes - startMinutes;
-          if (diff > 0) {
-            totalMinutes += diff;
-            weekData[formattedDate] = { start: startVal, end: endVal };
-          }
-        }
-      });
+      // Çarşamba
+      let wednesdayInMinutes = document.getElementById('wednesday-in-minutes').value;
+      let wednesdayOutMinutes = document.getElementById('wednesday-out-minutes').value;
+      if (wednesdayInMinutes && wednesdayOutMinutes) {
+        totalMinutes += calculateMinutes(wednesdayInMinutes, wednesdayOutMinutes);
+      }
 
-      const weekKey = `week-${formatDate(weekDates[0])}`;
-      localStorage.setItem(weekKey, JSON.stringify(weekData));
+      // Perşembe
+      let thursdayInMinutes = document.getElementById('thursday-in-minutes').value;
+      let thursdayOutMinutes = document.getElementById('thursday-out-minutes').value;
+      if (thursdayInMinutes && thursdayOutMinutes) {
+        totalMinutes += calculateMinutes(thursdayInMinutes, thursdayOutMinutes);
+      }
 
-      const hours = Math.floor(totalMinutes / 60);
-      const minutes = totalMinutes % 60;
-      document.getElementById("totalTime").textContent = `${hours} saat ${minutes} dakika`;
+      // Cuma
+      let fridayInMinutes = document.getElementById('friday-in-minutes').value;
+      let fridayOutMinutes = document.getElementById('friday-out-minutes').value;
+      if (fridayInMinutes && fridayOutMinutes) {
+        totalMinutes += calculateMinutes(fridayInMinutes, fridayOutMinutes);
+      }
+
+      // Toplam saat hesapla
+      let totalHours = totalMinutes / 60;
+      document.getElementById('total-hours').textContent = totalHours.toFixed(2);
     }
 
-    // Sayfa yüklendiğinde formu oluştur
-    document.addEventListener("DOMContentLoaded", generateForm);
+    function calculateMinutes(inTime, outTime) {
+      let inHour = parseInt(inTime) || 0;
+      let outHour = parseInt(outTime) || 0;
+      
+      // Saat farkını ve dakikaları hesapla
+      return (outHour - inHour) * 60;
+    }
   </script>
 </body>
 </html>
