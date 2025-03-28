@@ -17,6 +17,7 @@
     h2, h3 {
       text-align: center;
       color: #333;
+      margin-top: 20px;
     }
 
     table {
@@ -63,7 +64,7 @@
     }
 
     /* Mobil uyumlu stil */
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       body {
         padding: 10px;
       }
@@ -97,6 +98,7 @@
         width: 100%;
         padding: 8px;
         font-size: 16px;
+        margin-top: 5px;
       }
 
       button {
@@ -107,6 +109,23 @@
 
       h2, h3 {
         text-align: center;
+      }
+    }
+
+    /* Daha küçük ekranlar için ek stil */
+    @media (max-width: 480px) {
+      table th, table td {
+        font-size: 14px;
+        padding: 6px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      input[type="time"] {
+        font-size: 14px;
       }
     }
   </style>
@@ -127,28 +146,28 @@
     <tbody>
       <tr>
         <td>Pazartesi</td>
-        <td><input type="time" id="monday-in" onchange="limitMinutes(this)"></td>
-        <td><input type="time" id="monday-out" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="monday-in"></td>
+        <td><input type="time" id="monday-out"></td>
       </tr>
       <tr>
         <td>Salı</td>
-        <td><input type="time" id="tuesday-in" onchange="limitMinutes(this)"></td>
-        <td><input type="time" id="tuesday-out" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="tuesday-in"></td>
+        <td><input type="time" id="tuesday-out"></td>
       </tr>
       <tr>
         <td>Çarşamba</td>
-        <td><input type="time" id="wednesday-in" onchange="limitMinutes(this)"></td>
-        <td><input type="time" id="wednesday-out" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="wednesday-in"></td>
+        <td><input type="time" id="wednesday-out"></td>
       </tr>
       <tr>
         <td>Perşembe</td>
-        <td><input type="time" id="thursday-in" onchange="limitMinutes(this)"></td>
-        <td><input type="time" id="thursday-out" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="thursday-in"></td>
+        <td><input type="time" id="thursday-out"></td>
       </tr>
       <tr>
         <td>Cuma</td>
-        <td><input type="time" id="friday-in" onchange="limitMinutes(this)"></td>
-        <td><input type="time" id="friday-out" onchange="limitMinutes(this)"></td>
+        <td><input type="time" id="friday-in"></td>
+        <td><input type="time" id="friday-out"></td>
       </tr>
     </tbody>
   </table>
@@ -158,17 +177,6 @@
   <h3>Haftalık Çalışma Süresi: <span id="total-hours">0</span> saat</h3>
 
   <script>
-    // Dakika kısmını yalnızca 00 ve 30 olarak kısıtlayan fonksiyon
-    function limitMinutes(input) {
-      const value = input.value;
-      const [hours, minutes] = value.split(':');
-
-      // Eğer dakika 00 veya 30 değilse, 00'a ayarlıyoruz
-      if (minutes !== '00' && minutes !== '30') {
-        input.value = `${hours}:00`;
-      }
-    }
-
     function calculateWorkingHours() {
       let totalMinutes = 0;
 
